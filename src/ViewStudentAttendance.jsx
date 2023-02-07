@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Table from "./Table";
+import Table from "./table";
 import axios from "axios";
 import { useQuery } from '@tanstack/react-query';
 import { CSVLink } from 'react-csv'

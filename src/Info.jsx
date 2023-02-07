@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Profile from "./Profile";
+import Profile from "./profile";
 
 export default function Info(){
 
