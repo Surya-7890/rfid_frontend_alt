@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import StaffRegister from './staffRegister';
 import StudentRegister from './studentRegister';
-import Admin from './admin';
+import Admin from './Admin';
 import ViewStudentAttendance from './ViewStudentAttendance';
 import SelectRegister from './selectregister';
 import AdminInfo from './adminInfo';
