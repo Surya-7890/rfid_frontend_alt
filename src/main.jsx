@@ -5,7 +5,7 @@ import StudentRegister from './studentRegister';
 import Admin from './Admin';
 import ViewStudentAttendance from './ViewStudentAttendance';
 import SelectRegister from './selectregister';
-import AdminInfo from './adminInfo';
+import AdminInfo from './AdminInfo';
 import './index.css';
 import {BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './home';
