@@ -24,7 +24,7 @@ export default function StudentRegister(){
         const res = await axios.post('https://rfidbackendsece.onrender.com/students',{ name, dept, roll, year, id });
         const data = await res.data;
         if (data.message === "Success") {
-          window.localStorage.clear();
+          window.localStorage.removeItem('id');
           window.location.pathname = "/"
         }
     }

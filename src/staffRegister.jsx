@@ -22,7 +22,7 @@ export default function StaffRegister(){
         const res = await axios.post('https://rfidbackendsece.onrender.com/staffs',{ name, dept, id });
         const data = await res.data;
         if (data.message === "Success") {
-          window.localStorage.clear();
+          window.localStorage.removeItem('id');
           window.location.pathname = "/";
         } else {
           console.log( data.error );

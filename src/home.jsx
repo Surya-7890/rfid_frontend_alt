@@ -3,7 +3,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import io from "socket.io-client";
 
-const socket = io('https://rfidbackendsece.onrender.com', { secure: true });
+const socket = io('http://localhost:7000', { secure: true });
 
 const getTotalEntry = async()=>{
     const res = await axios.get('https://rfidbackendsece.onrender.com/gettotal/entry');
