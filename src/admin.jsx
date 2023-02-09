@@ -20,7 +20,8 @@ export default function Admin(){
         const data = await res.data;
         console.log(data);
         if(data.message === "Success"){
-          window.location.reload();
+          // window.location.reload();
+          window.localStorage.setItem('authToken', 'authorized');
           window.location.pathname = "/admin/getattendance";
         }
     }

@@ -44,8 +44,13 @@ export default function ViewStudentAttendance(){
 
     useEffect(()=>{
         const isRegistered = window.localStorage.getItem('token');
+        const isAuthorized = window.localStorage.getItem('authToken');
         if (!isRegistered) {
             window.location.pathname = "/signin";
+        }
+
+        if (!isAuthorized) {
+            window.location.pathname = "/admin";
         }
         
         const downloadStudentData = async () => {
@@ -84,6 +89,7 @@ export default function ViewStudentAttendance(){
     }
     downloadStaffData();
     downloadStudentData();
+    return window.localStorage.removeItem('authToken');
 },[])
 
 
