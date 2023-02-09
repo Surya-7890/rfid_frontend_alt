@@ -7,6 +7,10 @@ export default function StaffRegister(){
     const [id, setId] = useState(null);
     
     useEffect(() => {
+      const isRegistered = window.localStorage.getItem('token');
+      if (!isRegistered) {
+          window.location.pathname = "/signin";
+      }
       const storageId = window.localStorage.getItem('id');
       setId(storageId);
     })

@@ -2,26 +2,20 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function Admin(){
-
-  React.useEffect(()=>{
-    const isRegistered = window.localStorage.getItem('token');
-    if (!isRegistered) {
-        window.location.pathname = "/signin";
-    }
-  },[]);
+export default function SignIn(){
 
     async function handleSubmit(e){
         e.preventDefault()
         const user_name = document.getElementById('name').value;
         const password = document.getElementById('password').value;
-        console.log(user_name, password)
-        const res = await axios.post('https://rfidbackendsece.onrender.com/admin',{ user_name, password });
+        const res = await axios.post('https://rfidbackendsece.onrender.com/addadmin',{ user_name, password });
         const data = await res.data;
         console.log(data);
         if(data.message === "Success"){
-          window.location.reload();
-          window.location.pathname = "/admin/getattendance";
+          window.localStorage.setItem('token', data.token);
+          // window.location.reload();
+          window.location.pathname = "/";
+          // console.log(window.location.pathname);
         }
     }
 

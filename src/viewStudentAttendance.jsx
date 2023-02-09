@@ -43,6 +43,11 @@ export default function ViewStudentAttendance(){
     const [csvStaff, setCsvStaff] = React.useState(null)
 
     useEffect(()=>{
+        const isRegistered = window.localStorage.getItem('token');
+        if (!isRegistered) {
+            window.location.pathname = "/signin";
+        }
+        
         const downloadStudentData = async () => {
             const res = await axios.get('https://rfidbackendsece.onrender.com/downloadData/student');
             const data = await res.data;

@@ -10,6 +10,10 @@ export default function Info(){
     const id = window.location.pathname.split('/')[3];
 
     React.useEffect(()=>{
+        const isRegistered = window.localStorage.getItem('token');
+        if (!isRegistered) {
+            window.location.pathname = "/signin";
+        }
         async function getData(){
             const res = await axios.get(`https://rfidbackendsece.onrender.com/${target}/getinfo/${id}`);
             const data = await res.data;

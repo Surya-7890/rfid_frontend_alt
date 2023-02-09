@@ -2,6 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 export default function SelectRegister(){
 
+    React.useEffect(()=>{
+        const isRegistered = window.localStorage.getItem('token');
+        if (!isRegistered) {
+            window.location.pathname = "/signin";
+        }
+    },[]);
+
     return(
         <>
         <div className='bg-ylw h-screen w-screen mt-0'>

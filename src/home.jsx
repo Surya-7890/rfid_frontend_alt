@@ -22,6 +22,12 @@ export default function Home(){
 
 
     React.useEffect(()=>{
+
+        const isRegistered = window.localStorage.getItem('token');
+        if (!isRegistered) {
+            window.location.pathname = "/signin";
+        }
+
         socket.on('connect', () => {
             console.log('connected');
         });
@@ -29,6 +35,16 @@ export default function Home(){
             window.localStorage.setItem('id', id);
             window.location.pathname = "/selectregister";
         });
+
+        return () => {
+            socket.off('connect',()=>{
+                console.log('connected');
+            });
+            socket.off('newId',() => {
+                window.localStorage.setItem('id', id);
+                window.location.pathname = "/selectregister";
+            });
+        }
     },[]);
 
     const Entry = useQuery({
