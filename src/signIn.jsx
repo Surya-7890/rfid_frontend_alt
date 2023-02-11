@@ -8,14 +8,12 @@ export default function SignIn(){
         e.preventDefault()
         const user_name = document.getElementById('name').value;
         const password = document.getElementById('password').value;
-        const res = await axios.post('https://rfidbackendsece.onrender.com/addadmin',{ user_name, password });
+        const res = await axios.post('https://rfidbackendsece.onrender.com/admin/add',{ user_name, password });
         const data = await res.data;
         console.log(data);
         if(data.message === "Success"){
           window.localStorage.setItem('token', data.token);
-          // window.location.reload();
           window.location.pathname = "/";
-          // console.log(window.location.pathname);
         }
     }
 

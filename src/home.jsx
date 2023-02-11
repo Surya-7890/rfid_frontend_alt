@@ -5,21 +5,57 @@ import io from "socket.io-client";
 
 const socket = io('https://rfidbackendsece.onrender.com', { secure: true });
 
-const getTotalEntry = async()=>{
-    const res = await axios.get('https://rfidbackendsece.onrender.com/gettotal/entry');
-    const data = await res.data;
-    console.log(data);
-    return data;
-}
 
-const getTotalExit = async()=>{
-    const res = await axios.get('https://rfidbackendsece.onrender.com/gettotal/exit');
-    const data = await res.data;
-    return data;
-}
 
 export default function Home(){
 
+    const [ entryCount, setEntryCount ] = React.useState(0);
+    const [ exitCount, setExitCount ] = React.useState(0);
+
+
+    // fetching entry data from backend 
+    const getTotalEntry = async()=>{
+        const res = await axios.get('https://rfidbackendsece.onrender.com/gettotal/entry');
+        const data = await res.data;
+        const count = Number(data.message);
+        setEntryCount(count)
+        return data;
+    }   
+
+    const getTotalExit = async()=>{
+        const res = await axios.get('https://rfidbackendsece.onrender.com/gettotal/exit');
+        const data = await res.data;
+        const count = Number(data.message);
+        setExitCount(count)
+        return data;
+    }   
+    
+        //socketio event listeners
+        const eventListeners = () => {
+            socket.on('connect', () => {
+                console.log('connected');
+            });
+            socket.on('newId', (id) => {
+                window.localStorage.setItem('id', id);
+                window.location.pathname = "/selectregister";
+            });
+            socket.on('studentEntry', (id)=>{
+                console.log('student entry registered');
+                getTotalEntry();
+            });
+            socket.on('studentExit', (id) => {
+                console.log('student exit registered');
+                getTotalExit();
+            });
+            socket.on('staffEntry', (id)=>{
+                console.log('staff entry registered');
+                getTotalEntry();
+            });
+            socket.on('staffExit', (id) => {
+                console.log('staff exit registered');
+                getTotalExit();
+            });
+        }    
 
     React.useEffect(()=>{
 
@@ -28,13 +64,9 @@ export default function Home(){
             window.location.pathname = "/signin";
         }
 
-        socket.on('connect', () => {
-            console.log('connected');
-        });
-        socket.on('newId', (id) => {
-            window.localStorage.setItem('id', id);
-            window.location.pathname = "/selectregister";
-        });
+        eventListeners();
+        getTotalEntry();
+        getTotalExit();
 
         return () => {
             socket.off('connect',()=>{
@@ -44,26 +76,25 @@ export default function Home(){
                 window.localStorage.setItem('id', id);
                 window.location.pathname = "/selectregister";
             });
+            socket.off('studentEntry', (id)=>{
+                console.log('student entry registered');
+                getTotalEntry();
+            });
+            socket.off('studentExit', (id) => {
+                console.log('student exit registered');
+                getTotalExit();
+            });
+            socket.off('staffEntry', (id)=>{
+                console.log('staff entry registered');
+                getTotalEntry();
+            });
+            socket.off('staffExit', (id) => {
+                console.log('staff exit registered');
+                getTotalExit();
+            });
         }
     },[]);
 
-    const Entry = useQuery({
-        queryKey: ['totalEntry'],
-        queryFn: getTotalEntry,
-        refetchInterval: 1000,
-        refetchIntervalInBackground: true
-    });
-
-    const Exit = useQuery({
-        queryKey: ['totalExit'],
-        queryFn: getTotalExit,
-        refetchInterval: 1000,
-        refetchIntervalInBackground: true
-    });
-
-    if(Entry.isLoading || Exit.isLoading){
-        return <h2>Loading...</h2>
-    } 
 
     function redirect(){
         window.location.pathname = "/admin"
@@ -85,7 +116,7 @@ export default function Home(){
             <div className='absolute top-64 left-96 flex justify-around w-4/6 ml-8 h-max'>
 
                 <div>
-                <div className='h-56 w-56 bg-blue-500 rounded-full absolute flex justify-center items-center'><div className='h-44 w-44 bg-ylw rounded-full font-semibold text-3xl flex justify-center pt-5'>{Entry.data.message - Exit.data.message}</div></div>
+                <div className='h-56 w-56 bg-blue-500 rounded-full absolute flex justify-center items-center'><div className='h-44 w-44 bg-ylw rounded-full font-semibold text-3xl flex justify-center pt-5'>{entryCount - exitCount}</div></div>
                 <div className='relative top-28 left-12 px-4 bg-ylw'>
                     <img src="/user-solid.svg" className='h-28 fill-white text-white' onClick={redirect} />
                 </div>  
@@ -93,14 +124,14 @@ export default function Home(){
                 </div>
 
                 <div className='ml-8'>
-                <div className='h-56 w-56 bg-green-500 rounded-full absolute flex justify-center items-center'><div className='h-44 w-44 bg-ylw rounded-full font-semibold text-3xl flex justify-center pt-5'>{Entry.data.message}</div></div>
+                <div className='h-56 w-56 bg-green-500 rounded-full absolute flex justify-center items-center'><div className='h-44 w-44 bg-ylw rounded-full font-semibold text-3xl flex justify-center pt-5'>{entryCount}</div></div>
                 <div className='relative top-28 left-[26px] px-4 bg-ylw rounded-t-full'>
                     <img src="/user-plus-solid.svg" className='h-28 fill-white text-white' />
                 </div>
                <div className='relative text-white top-28 left-[60px] bg-green-500 w-fit px-5 py-2 mt-2'> IN Count</div>
                 </div>
                 <div className='relative -left-3'>
-                <div className='h-56 w-56 bg-red-500 rounded-full absolute flex justify-center items-center'><div className='h-44 w-44 bg-ylw rounded-full font-semibold text-3xl flex justify-center pt-5'>{Exit.data.message}</div></div>
+                <div className='h-56 w-56 bg-red-500 rounded-full absolute flex justify-center items-center'><div className='h-44 w-44 bg-ylw rounded-full font-semibold text-3xl flex justify-center pt-5'>{exitCount}</div></div>
                 <div className='relative top-28 left-[28px] px-4 bg-ylw rounded-t-full'>
                     <img src="/user-minus-solid.svg" className='h-28 fill-white text-white' />
                 </div>              
