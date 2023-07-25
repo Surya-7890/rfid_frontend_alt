@@ -11,15 +11,17 @@ import {BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './home.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
+import * as Realm from "realm-web";
 
 
+const app = new Realm.App({ id: 'application-1-sbubp' });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <QueryClientProvider client={queryClient}>
   <BrowserRouter>
      <Routes>
-       <Route path="/" element={<Home />} />
+       <Route path="/" element={<Home app={app} />} />
        <Route path="/signin" element={<SignIn />} />
        <Route path="/staffregister" element={<StaffRegister />} />
        <Route path="/studentregister" element={<StudentRegister />} />

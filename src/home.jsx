@@ -7,7 +7,7 @@ const socket = io('https://rfidbackendsece.onrender.com', { secure: true });
 
 
 
-export default function Home(){
+export default function Home({ app }){
 
     const [ entryCount, setEntryCount ] = React.useState(0);
     const [ exitCount, setExitCount ] = React.useState(0);
@@ -58,12 +58,6 @@ export default function Home(){
         }    
 
     React.useEffect(()=>{
-
-        const isRegistered = window.localStorage.getItem('token');
-        if (!isRegistered) {
-            window.location.pathname = "/signin";
-        }
-
         eventListeners();
         getTotalEntry();
         getTotalExit();
@@ -102,13 +96,13 @@ export default function Home(){
 
     return(
         <>
-        <div className='bg-ylw'>
+        <div className='bg-ylw overflow-hidden'>
         <div className='bg-slate-200 bg-opacity-30 absolute top-0 flex w-screen justify-center h-10 items-center text-xl'><div className='absolute right-[460px] font-bold text-'>MAKERSPACE DASHBOARD</div></div>
         <div className='relative'>
             <div className='md:h-screen md:w-1/4 md:bg-black hidden md:block'>
             <div className='w-1/4'>
-            <div className='absolute top-[262px] left-20 text-white text-2xl rounded-md bg-red-600 p-3 mt-2 z-10'>Place Your Id card</div>
-            <img src="./id-card.png" className='absolute left-16 top-80 h-64 mb-2 z-0' />
+                <div className='absolute top-[262px] left-20 text-white text-2xl rounded-md bg-red-600 p-3 mt-2 z-10'>Place Your Id card</div>
+                <img src="./id-card.png" className='absolute left-16 top-80 h-64 mb-2 z-0' />
             </div>
             </div>
 
@@ -135,7 +129,7 @@ export default function Home(){
                 <div className='relative top-28 left-[28px] px-4 bg-ylw rounded-t-full'>
                     <img src="/user-minus-solid.svg" className='h-28 fill-white text-white' />
                 </div>              
-                <div className='relative text-white top-28 left-[60px] bg-red-500 w-fit px-5 py-2 mt-2'>OUT Count</div>
+                <div className='relative text-white top-28 left-[60px] bg-red-500 w-fit px-5 py-2 mt-2'>OUT count</div>
                 </div>
             </div>
              </div>

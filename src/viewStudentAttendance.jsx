@@ -81,11 +81,7 @@ export default function ViewStudentAttendance(){
     })
 
     useEffect(()=>{
-        const isRegistered = window.localStorage.getItem('token');
-        const isAuthorized = window.localStorage.getItem('authToken');
-        if (!isRegistered) {
-            window.location.pathname = "/signin";
-        }
+        
         socket.on('studentEntry', (id)=>{
             console.log('student entry registered');
             getStudentCount();
@@ -178,8 +174,8 @@ export default function ViewStudentAttendance(){
                                 <img src="/user-tie-solid.svg" className='h-20 fill-white text-white flex flex-col justify-center items-center mb-3' />
                                 { csvStaff && <CSVLink {...csvStaff} className='h-12 shadow-xl hover:bg-green-400 hover:-translate-y-1 cursor-pointer w-20 bg-green-500 flex justify-center items-center text-white rounded-xl absolute left-2'>Download</CSVLink>}
                             </div>
-                            </div>
                         </div>
+                    </div>
                 </div>
             <div className='col-span-10 h-screen mt-2 overflow-scroll'>
                 <div className='flex justify-around space-x-3 text-black'>
