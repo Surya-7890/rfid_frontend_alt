@@ -6,6 +6,12 @@
   npm install
 ```
 
+### Running The Client Code
+
+```bash
+  npm run dev
+```
+
 ### Home Page
 
 #### Dashboard where users can see the number of people in the room
