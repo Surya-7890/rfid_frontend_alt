@@ -112,7 +112,7 @@ export default function Home({ app }){
                 <div>
                 <div className='h-56 w-56 bg-blue-500 rounded-full absolute flex justify-center items-center'><div className='h-44 w-44 bg-ylw rounded-full font-semibold text-3xl flex justify-center pt-5'>{entryCount - exitCount}</div></div>
                 <div className='relative top-28 left-12 px-4 bg-ylw'>
-                    <img src="/user-solid.svg" className='h-28 fill-white text-white' onClick={redirect} />
+                    <img src="/user-tie-solid.svg" className='h-28 fill-white text-white' onClick={redirect} />
                 </div>  
                <div className='relative text-white top-28 left-[72px] bg-blue-500 w-fit px-5 py-2 mt-2'>Count</div>
                 </div>
@@ -129,7 +129,7 @@ export default function Home({ app }){
                 <div className='relative top-28 left-[28px] px-4 bg-ylw rounded-t-full'>
                     <img src="/user-minus-solid.svg" className='h-28 fill-white text-white' />
                 </div>              
-                <div className='relative text-white top-28 left-[60px] bg-red-500 w-fit px-5 py-2 mt-2'>OUT count</div>
+                <div className='relative text-white top-28 left-[60px] bg-red-500 w-fit px-5 py-2 mt-2'>OUT Count</div>
                 </div>
             </div>
              </div>
